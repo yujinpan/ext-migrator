@@ -1,0 +1,6 @@
+{
+  "name": "base",
+  "scripts": {
+    "do": "node ../../bin/extension-migrator.js"
+  }
+}
