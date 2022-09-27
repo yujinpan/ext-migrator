@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "complete or remove files extension.",
   "main": "lib/index.js",
+  "files": ["lib", "bin"],
   "scripts": {
     "publish:beta": "npm version prerelease --preid=beta && npm publish",
     "publish:patch": "npm version patch && npm publish",
