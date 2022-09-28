@@ -1,6 +1,22 @@
-# Node Base
+# Extension Migrator
 
-- `npm test` test your code
-- `npm run build` build your code
-- `npm publish:beta` publish beta version
-- `npm publish:patch` publish patch version
+| source                     | target                               |
+| -------------------------- | ------------------------------------ |
+| `import '@/example-js'`    | `import '@/example-js.js'`           |
+| `import '@/example-ts'`    | `import '@/example-ts.ts'`           |
+| `import '@/example-jsx'`   | `import '@/example-jsx.jsx'`         |
+| `import '@/example-tsx'`   | `import '@/example-tsx.tsx'`         |
+| `import '@/example-vue'`   | `import '@/example-vue.vue'`         |
+| `import '@/example-index'` | `import '@/example-index/index.vue'` |
+
+## Install
+
+```shell
+npm i --no-save extension-migrator
+```
+
+## Start
+
+```shell
+extension-migrator
+```
