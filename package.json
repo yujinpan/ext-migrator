@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "complete or remove files extension.",
   "main": "lib/index.js",
-  "files": ["lib", "bin"],
+  "files": [
+    "lib",
+    "bin"
+  ],
   "scripts": {
     "publish:beta": "npm version prerelease --preid=beta && npm publish",
     "publish:patch": "npm version patch && npm publish",
     "version": "npm run build",
     "postversion": "git push --all && git push --tags",
     "build": "rm -rf lib && tsc --build tsconfig.app.json",
-    "test": "jest"
+    "test": "jest",
+    "ci-test": "npm run build && cd examples/base && npm run do"
   },
   "author": "yujinpan",
   "devDependencies": {
@@ -36,5 +40,8 @@
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/yujinpan/extension-migrator.git"
+  },
+  "dependencies": {
+    "glob": "^8.0.3"
   }
 }
