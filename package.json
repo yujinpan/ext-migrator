@@ -7,6 +7,9 @@
     "lib",
     "bin"
   ],
+  "bin": {
+    "extension-migrator": "bin/extension-migrator.js"
+  },
   "scripts": {
     "publish:beta": "npm version prerelease --preid=beta && npm publish",
     "publish:patch": "npm version patch && npm publish",
