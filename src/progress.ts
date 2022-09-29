@@ -8,7 +8,7 @@ import * as readline from 'readline';
  * progress.tick('do something ...');
  */
 export class Progress {
-  private readonly total: number;
+  private total: number;
   private readonly title: string;
   private readonly endMsg: string;
   private readonly stream: NodeJS.WriteStream;
@@ -26,15 +26,23 @@ export class Progress {
     this.total = options.total || 100;
     this.title = options.title;
     this.endMsg = options.endMsg;
-    this.stream = options.stream || process.stderr;
+    this.stream = options.stream || process.stdout;
+  }
+
+  setTotal(total: number) {
+    this.total = total;
   }
 
   tick(msg = '', value = this.value + 1) {
     this.value = value;
-    this.write(msg);
-    if (this.value === this.total && this.endMsg) {
-      this.stream.write('\n');
-      this.stream.write(this.endMsg);
+    if (this.value === this.total) {
+      readline.cursorTo(this.stream, 0);
+      readline.clearLine(this.stream, 1);
+      if (this.endMsg) {
+        this.stream.write(this.endMsg);
+      }
+    } else {
+      this.write(msg);
     }
   }
 
