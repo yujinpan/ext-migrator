@@ -1,5 +1,7 @@
 # Extension Migrator
 
+Complete or remove files extension.
+
 | source                     | target                               |
 | -------------------------- | ------------------------------------ |
 | `import '@/example-js'`    | `import '@/example-js.js'`           |
