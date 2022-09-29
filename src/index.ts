@@ -2,8 +2,8 @@ import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 
-import { Progress } from '@/progress';
-import { runner } from '@/runner';
+import { Progress } from './progress';
+import { runner } from './runner';
 
 export type Options = {
   files?: string[];

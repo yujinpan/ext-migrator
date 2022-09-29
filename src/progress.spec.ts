@@ -1,5 +1,5 @@
-import { Progress } from '@/progress';
-import { runner } from '@/runner';
+import { Progress } from './progress';
+import { runner } from './runner';
 
 describe('progress', () => {
   it('should tick', async function () {

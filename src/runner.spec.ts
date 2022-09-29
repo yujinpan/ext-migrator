@@ -1,4 +1,4 @@
-import { runner } from '@/runner';
+import { runner } from './runner';
 
 describe('runner', function () {
   it('should run tasks', async function () {
