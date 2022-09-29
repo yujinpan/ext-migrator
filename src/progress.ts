@@ -36,8 +36,8 @@ export class Progress {
   tick(msg = '', value = this.value + 1) {
     this.value = value;
     if (this.value === this.total) {
-      readline.cursorTo(this.stream, 0);
-      readline.clearLine(this.stream, 1);
+      this.clear();
+
       if (this.endMsg) {
         this.stream.write(this.endMsg);
       }
@@ -47,13 +47,17 @@ export class Progress {
   }
 
   private write(msg: string) {
-    readline.cursorTo(this.stream, 0);
-    readline.clearLine(this.stream, 1);
+    this.clear();
 
     this.stream.write(
       `${this.title ? this.title + ' ' : ''}(${this.value}/${
         this.total
       }) ${msg}`,
     );
+  }
+
+  private clear() {
+    readline.cursorTo(this.stream, 0, 0);
+    readline.clearLine(this.stream, 1);
   }
 }
