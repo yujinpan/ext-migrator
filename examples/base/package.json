@@ -4,6 +4,6 @@
     "start": "extension-migrator"
   },
   "devDependencies": {
-    "extension-migrator": "^1.0.1-beta.0"
+    "extension-migrator": "^1.0.1-beta.1"
   }
 }
