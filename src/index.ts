@@ -66,7 +66,7 @@ export function extMigrator(options: Options = {}) {
     for (const extension in categoryImports) {
       if (extension === 'none') {
         for (const key in complete) {
-          if (complete[key]) {
+          if (complete[key] === true) {
             tasks.push(
               createCompleteTask(
                 progress,
@@ -79,7 +79,7 @@ export function extMigrator(options: Options = {}) {
             );
           }
         }
-      } else if (complete[extension]) {
+      } else if (complete[extension] === true) {
         tasks.push(
           createCompleteTask(
             progress,
@@ -90,7 +90,7 @@ export function extMigrator(options: Options = {}) {
             options.log,
           ),
         );
-      } else {
+      } else if (complete[extension] === false) {
         tasks.push(
           createRemoveTask(
             progress,
