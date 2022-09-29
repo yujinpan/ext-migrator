@@ -1,4 +1,4 @@
-# Extension Migrator
+# Ext Migrator
 
 Complete or remove files extension.
 
@@ -14,11 +14,11 @@ Complete or remove files extension.
 ## Install
 
 ```shell
-npm i --no-save extension-migrator
+npm i --no-save ext-migrator
 ```
 
 ## Start
 
 ```shell
-extension-migrator
+ext-migrator
 ```

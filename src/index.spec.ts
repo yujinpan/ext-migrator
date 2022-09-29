@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { extensionMigrator } from './index';
+import { extMigrator } from './index';
 
 const root = 'example-files';
 
@@ -23,7 +23,7 @@ const readFile = (filepath: string) => {
   return fs.readFileSync(path.resolve(root, filepath)).toString();
 };
 
-describe('extensionMigrator', () => {
+describe('extMigrator', () => {
   it('should complete js/ts/jsx/tsx/vue', function () {
     writeFile('example-js.js');
     writeFile('example-ts.ts');
@@ -41,7 +41,7 @@ import "example-vue";
 `,
     );
 
-    extensionMigrator({
+    extMigrator({
       files: [path.resolve(root, 'index.js')],
       complete: true,
     });
@@ -55,7 +55,7 @@ import "example-vue.vue";
 `,
     );
 
-    extensionMigrator({
+    extMigrator({
       files: [path.resolve(root, 'index.js')],
     });
     expect(readFile('index.js')).toBe(
@@ -86,7 +86,7 @@ import "example-vue";
 `,
     );
 
-    extensionMigrator({
+    extMigrator({
       files: [path.resolve(root, 'index.js')],
       complete: true,
     });
@@ -100,7 +100,7 @@ import "example-vue/index.vue";
 `,
     );
 
-    extensionMigrator({
+    extMigrator({
       files: [path.resolve(root, 'index.js')],
     });
     expect(readFile('index.js')).toBe(
@@ -125,7 +125,7 @@ import '@/example'
     `,
     );
 
-    extensionMigrator({
+    extMigrator({
       files: [path.resolve(root, 'index.js')],
       complete: true,
       alias: {
@@ -137,7 +137,7 @@ import '@/index.js'
 import '@/example.js'
     `);
 
-    extensionMigrator({
+    extMigrator({
       files: [path.resolve(root, 'index.js')],
       alias: {
         '@': root + '/src',

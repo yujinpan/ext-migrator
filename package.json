@@ -1,5 +1,5 @@
 {
-  "name": "extension-migrator",
+  "name": "ext-migrator",
   "version": "1.0.1-beta.1",
   "description": "complete or remove files extension.",
   "main": "lib/index.js",
@@ -8,7 +8,7 @@
     "bin"
   ],
   "bin": {
-    "extension-migrator": "bin/extension-migrator.js"
+    "ext-migrator": "bin/ext-migrator.js"
   },
   "scripts": {
     "publish:beta": "npm version prerelease --preid=beta && npm publish",
@@ -39,13 +39,13 @@
     "node": ">=14.19.3"
   },
   "bugs": {
-    "url": "https://github.com/yujinpan/extension-migrator/issues"
+    "url": "https://github.com/yujinpan/ext-migrator/issues"
   },
-  "homepage": "https://github.com/yujinpan/extension-migrator#readme",
+  "homepage": "https://github.com/yujinpan/ext-migrator#readme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/yujinpan/extension-migrator.git"
+    "url": "git+ssh://git@github.com/yujinpan/ext-migrator.git"
   },
   "dependencies": {
     "glob": "^8.0.3"

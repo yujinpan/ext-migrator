@@ -18,7 +18,7 @@ export type Options = {
   log?: boolean;
 };
 
-export function extensionMigrator(options: Options = {}) {
+export function extMigrator(options: Options = {}) {
   const complete =
     typeof options.complete === 'boolean'
       ? {

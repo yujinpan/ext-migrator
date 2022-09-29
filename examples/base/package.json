@@ -1,9 +1,9 @@
 {
   "name": "base",
   "scripts": {
-    "start": "extension-migrator"
+    "start": "ext-migrator"
   },
   "devDependencies": {
-    "extension-migrator": "^1.0.1-beta.1"
+    "ext-migrator": "^1.0.1-beta.1"
   }
 }
