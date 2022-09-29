@@ -48,7 +48,7 @@ export function extMigrator(options: Options = {}) {
   ];
   const files: string[] = options.files
     ? options.files.map((item) => glob.sync(item)).flat()
-    : glob.sync(`src/*.+(${extensions.join('|')})`);
+    : glob.sync(`src/**/*.+(${extensions.join('|')})`);
 
   files.forEach((filepath) => {
     const categoryImports = getCategoryImports(
