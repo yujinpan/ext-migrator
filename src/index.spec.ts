@@ -24,7 +24,7 @@ const readFile = (filepath: string) => {
 };
 
 describe('extMigrator', () => {
-  it('should complete js/ts/jsx/tsx/vue', function () {
+  it('should complete js/ts/jsx/tsx/vue', async function () {
     writeFile('example-js.js');
     writeFile('example-ts.ts');
     writeFile('example-jsx.jsx');
@@ -41,7 +41,7 @@ import "example-vue";
 `,
     );
 
-    extMigrator({
+    await extMigrator({
       files: [path.resolve(root, 'index.js')],
       complete: true,
     });
@@ -55,7 +55,7 @@ import "example-vue.vue";
 `,
     );
 
-    extMigrator({
+    await extMigrator({
       files: [path.resolve(root, 'index.js')],
     });
     expect(readFile('index.js')).toBe(
@@ -69,7 +69,7 @@ import "example-vue.vue";
     );
   });
 
-  it('should complete index.js/ts/jsx/tsx/vue', function () {
+  it('should complete index.js/ts/jsx/tsx/vue', async function () {
     writeFile('example-js/index.js');
     writeFile('example-ts/index.ts');
     writeFile('example-jsx/index.jsx');
@@ -86,7 +86,7 @@ import "example-vue";
 `,
     );
 
-    extMigrator({
+    await extMigrator({
       files: [path.resolve(root, 'index.js')],
       complete: true,
     });
@@ -100,7 +100,7 @@ import "example-vue/index.vue";
 `,
     );
 
-    extMigrator({
+    await extMigrator({
       files: [path.resolve(root, 'index.js')],
     });
     expect(readFile('index.js')).toBe(
@@ -114,7 +114,7 @@ import "example-vue/index.vue";
     );
   });
 
-  it('should complete with alias', function () {
+  it('should complete with alias', async function () {
     writeFile('src/index.js');
     writeFile('src/example.js');
     writeFile(
@@ -125,7 +125,7 @@ import '@/example'
     `,
     );
 
-    extMigrator({
+    await extMigrator({
       files: [path.resolve(root, 'index.js')],
       complete: true,
       alias: {
@@ -137,7 +137,7 @@ import '@/index.js'
 import '@/example.js'
     `);
 
-    extMigrator({
+    await extMigrator({
       files: [path.resolve(root, 'index.js')],
       alias: {
         '@': root + '/src',

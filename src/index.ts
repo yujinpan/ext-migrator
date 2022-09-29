@@ -2,6 +2,9 @@ import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
 
+import { Progress } from '@/progress';
+import { runner } from '@/runner';
+
 export type Options = {
   files?: string[];
   alias?: Record<string, string>;
@@ -50,6 +53,11 @@ export function extMigrator(options: Options = {}) {
     ? options.files.map((item) => glob.sync(item)).flat()
     : glob.sync(`src/**/*.+(${extensions.join('|')})`);
 
+  const tasks: (() => any)[] = [];
+  const progress = new Progress({
+    title: '[ext-migrator]',
+  });
+
   files.forEach((filepath) => {
     const categoryImports = getCategoryImports(
       fs.readFileSync(filepath).toString(),
@@ -59,40 +67,86 @@ export function extMigrator(options: Options = {}) {
       if (extension === 'none') {
         for (const key in complete) {
           if (complete[key]) {
-            // need complete
-            categoryImports.none.forEach((item) => {
-              writeFileImport(
+            tasks.push(
+              createCompleteTask(
+                progress,
                 filepath,
-                item,
-                tryFindFile(filepath, item, [key], options.alias),
+                categoryImports.none,
+                [key],
+                options.alias,
                 options.log,
-              );
-            });
+              ),
+            );
           }
         }
       } else if (complete[extension]) {
-        // need complete
-        categoryImports[extension].forEach((item) => {
-          writeFileImport(
+        tasks.push(
+          createCompleteTask(
+            progress,
             filepath,
-            item,
-            tryFindFile(filepath, item, extensions, options.alias),
+            categoryImports[extension],
+            extensions,
+            options.alias,
             options.log,
-          );
-        });
+          ),
+        );
       } else {
-        // need remove
-        categoryImports[extension].forEach((item) =>
-          writeFileImport(
+        tasks.push(
+          createRemoveTask(
+            progress,
             filepath,
-            item,
-            item.replace(new RegExp(`(/index)?.${extension}$`), ''),
+            categoryImports[extension],
+            extension,
             options.log,
           ),
         );
       }
     }
   });
+  progress.setTotal(tasks.length);
+
+  return runner(tasks);
+}
+
+function createCompleteTask(
+  progress: Progress,
+  filepath: string,
+  imports: string[],
+  extensions: string[],
+  alias: Record<string, string>,
+  log?: boolean,
+) {
+  return () => {
+    progress.tick('complete: ' + filepath);
+    imports.forEach((item) =>
+      writeFileImport(
+        filepath,
+        item,
+        tryFindFile(filepath, item, extensions, alias),
+        log,
+      ),
+    );
+  };
+}
+
+function createRemoveTask(
+  progress: Progress,
+  filepath: string,
+  imports: string[],
+  extension: string,
+  log?: boolean,
+) {
+  return () => {
+    progress.tick('remove: ' + filepath);
+    imports.forEach((item) =>
+      writeFileImport(
+        filepath,
+        item,
+        item.replace(new RegExp(`(/index)?.${extension}$`), ''),
+        log,
+      ),
+    );
+  };
 }
 
 function tryFindFile(
