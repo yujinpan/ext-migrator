@@ -45,9 +45,13 @@ export function extMigrator(options: Options = {}) {
           ...options.complete,
         };
 
-  const files: string[] = options.files
-    ? options.files.map((item) => glob.sync(item)).flat()
-    : glob.sync(`src/**/*.+(${extensions.join('|')})`);
+  const files: string[] = (options.files || ['src/**/*'])
+    .map((item) =>
+      glob.sync(item, {
+        matchBase: "*.+(${extensions.join('|')})",
+      }),
+    )
+    .flat();
 
   const tasks: (() => any)[] = [];
   const progress = new Progress({
