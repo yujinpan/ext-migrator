@@ -48,6 +48,7 @@
     "url": "git+ssh://git@github.com/yujinpan/ext-migrator.git"
   },
   "dependencies": {
-    "glob": "^8.0.3"
+    "glob": "^8.0.3",
+    "yargs": "^17.5.1"
   }
 }
