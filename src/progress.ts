@@ -12,6 +12,7 @@ export class Progress {
   private readonly title: string;
   private readonly endMsg: string;
   private readonly stream: NodeJS.WriteStream;
+  private prevLines = 0;
 
   value = 0;
 
@@ -49,15 +50,16 @@ export class Progress {
   private write(msg: string) {
     this.clear();
 
-    this.stream.write(
-      `${this.title ? this.title + ' ' : ''}(${this.value}/${
-        this.total
-      }) ${msg}`,
-    );
+    const content = `${this.title ? this.title + ' ' : ''}(${this.value}/${
+      this.total
+    }) ${msg}`;
+    this.stream.write(content);
+    this.prevLines = Math.floor(content.length / (this.stream.columns || 80));
   }
 
   private clear() {
-    readline.cursorTo(this.stream, 0, 0);
+    readline.moveCursor(this.stream, 0, -this.prevLines);
+    readline.cursorTo(this.stream, 0);
     readline.clearLine(this.stream, 1);
   }
 }
