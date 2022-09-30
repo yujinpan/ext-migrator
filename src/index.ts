@@ -48,6 +48,7 @@ export function extMigrator(options: Options = {}) {
   const files: string[] = (options.files || ['src/**/*'])
     .map((item) =>
       glob.sync(item, {
+        nodir: true,
         matchBase: "*.+(${extensions.join('|')})",
       }),
     )
