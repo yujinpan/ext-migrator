@@ -1,6 +1,6 @@
 {
   "name": "ext-migrator",
-  "version": "1.0.1-beta.7",
+  "version": "1.0.1-beta.8",
   "description": "complete or remove files extension.",
   "main": "lib/index.js",
   "files": [
