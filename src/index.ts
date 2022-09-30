@@ -74,24 +74,13 @@ export function extMigrator(options: Options = {}) {
                 progress,
                 filepath,
                 categoryImports.none,
-                [key],
+                key,
                 options.alias,
                 options.log,
               ),
             );
           }
         }
-      } else if (complete[extension] === true) {
-        tasks.push(
-          createCompleteTask(
-            progress,
-            filepath,
-            categoryImports[extension],
-            extensions,
-            options.alias,
-            options.log,
-          ),
-        );
       } else if (complete[extension] === false) {
         tasks.push(
           createRemoveTask(
@@ -114,20 +103,19 @@ function createCompleteTask(
   progress: Progress,
   filepath: string,
   imports: string[],
-  extensions: string[],
+  extension: string,
   alias: Record<string, string>,
   log?: boolean,
 ) {
   return () => {
     progress.tick('complete: ' + filepath);
-    imports.forEach((item) =>
-      writeFileImport(
-        filepath,
-        item,
-        tryFindFile(filepath, item, extensions, alias),
-        log,
-      ),
-    );
+    imports.forEach((item) => {
+      const newImport = tryFindFile(filepath, item, [extension], alias);
+      if (newImport === item) {
+        return;
+      }
+      writeFileImport(filepath, item, newImport, log);
+    });
   };
 }
 
@@ -140,14 +128,13 @@ function createRemoveTask(
 ) {
   return () => {
     progress.tick('remove: ' + filepath);
-    imports.forEach((item) =>
-      writeFileImport(
-        filepath,
-        item,
-        item.replace(new RegExp(`(/index)?.${extension}$`), ''),
-        log,
-      ),
-    );
+    imports.forEach((item) => {
+      const newImport = item.replace(new RegExp(`(/index)?.${extension}$`), '');
+      if (newImport === item) {
+        return;
+      }
+      writeFileImport(filepath, item, newImport, log);
+    });
   };
 }
 
