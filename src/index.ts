@@ -96,7 +96,12 @@ export function extMigrator(options: Options = {}) {
   });
   progress.setTotal(tasks.length);
 
-  return runner(tasks);
+  const startTime = Date.now();
+  return runner(tasks).then(() => {
+    const time = (Date.now() - startTime) / 1000;
+    // eslint-disable-next-line no-console
+    console.log(`[ext-migrator] complete time: ${time} s`);
+  });
 }
 
 function createCompleteTask(
