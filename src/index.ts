@@ -22,25 +22,6 @@ export type Options = {
 };
 
 export function extMigrator(options: Options = {}) {
-  const complete =
-    typeof options.complete === 'boolean'
-      ? {
-          js: options.complete,
-          jsx: options.complete,
-          ts: options.complete,
-          tsx: options.complete,
-          vue: options.complete,
-        }
-      : {
-          js: false,
-          jsx: false,
-          ts: false,
-          tsx: false,
-          vue: true,
-          scss: true,
-          css: true,
-          ...options.complete,
-        };
   const extensions = [
     'js',
     'ts',
@@ -51,6 +32,19 @@ export function extMigrator(options: Options = {}) {
     'css',
     ...(options.extensions || []),
   ];
+  const complete =
+    typeof options.complete === 'boolean'
+      ? extensions.reduce(
+          (prev, next) => ({ ...prev, [next]: options.complete }),
+          {},
+        )
+      : {
+          vue: true,
+          scss: true,
+          css: true,
+          ...options.complete,
+        };
+
   const files: string[] = options.files
     ? options.files.map((item) => glob.sync(item)).flat()
     : glob.sync(`src/**/*.+(${extensions.join('|')})`);

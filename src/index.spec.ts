@@ -57,6 +57,7 @@ import "example-vue.vue";
 
     await extMigrator({
       files: [path.resolve(root, 'index.js')],
+      complete: false,
     });
     expect(readFile('index.js')).toBe(
       `
@@ -64,7 +65,7 @@ import "example-js";
 import "example-ts";
 import "example-jsx";
 import "example-tsx";
-import "example-vue.vue";
+import "example-vue";
 `,
     );
   });
@@ -102,6 +103,7 @@ import "example-vue/index.vue";
 
     await extMigrator({
       files: [path.resolve(root, 'index.js')],
+      complete: false,
     });
     expect(readFile('index.js')).toBe(
       `
@@ -109,7 +111,7 @@ import "example-js";
 import "example-ts";
 import "example-jsx";
 import "example-tsx";
-import "example-vue/index.vue";
+import "example-vue";
 `,
     );
   });
@@ -142,6 +144,7 @@ import '@/example.js'
       alias: {
         '@': root + '/src',
       },
+      complete: false,
     });
     expect(readFile('index.js')).toBe(`
 import '@'
