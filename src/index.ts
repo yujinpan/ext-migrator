@@ -94,7 +94,7 @@ export function extMigrator(options: Options = {}) {
   return runner(tasks).then(() => {
     const time = (Date.now() - startTime) / 1000;
     // eslint-disable-next-line no-console
-    console.log(`[ext-migrator] complete time: ${time} s`);
+    console.log(`[ext-migrator] ${tasks.length} files: ${time} s`);
   });
 }
 
