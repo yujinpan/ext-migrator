@@ -37,6 +37,8 @@ export function extMigrator(options: Options = {}) {
           ts: false,
           tsx: false,
           vue: true,
+          scss: true,
+          css: true,
           ...options.complete,
         };
   const extensions = [
